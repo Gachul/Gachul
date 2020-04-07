@@ -49,22 +49,22 @@ class CircularDeque : public CircularQueue { // CircularQueue를 상속받은 Ci
   void addRear(int val) { enqueue(val);} // addRear는 부모 클래스의 enqueue()에 해당
   int deleteFront( ) { return dequeue(); } // deleteFront는 부모 클래스의 dequeue()에 해당
   int getFront( ) { return peek(); } // getFront는 부모 클래스의 peek()에 해당
-  int hold = front; // 기준점 선언
 
   int addFront(int val){ // 덱의 맨 앞에 삽입
     if(isFull()){
       error("error\n");
     } else {
-      front = MAX_QUEUE_SIZE - rear;
       data[front] = val;
+      front = (front - 1 + MAX_QUEUE_SIZE) % MAX_QUEUE_SIZE;
     }
   }
 
   int deleteRear(){
     if(isEmpty()) error("error");
     else{
-      rear = (rear - 1) % MAX_QUEUE_SIZE;
-      return data[rear];
+      int ret = data[rear];
+      rear = (rear - 1 + MAX_QUEUE_SIZE) % MAX_QUEUE_SIZE;
+      return data[ret];
     }
   }
 
